@@ -9,7 +9,7 @@ class Room(models.Model):
     capacity = models.IntegerField()
 
     def __str__(self):
-        return self.name
+        return f"{self.name} - {self.capacity}"
 
 
 class Booking(models.Model):
@@ -20,4 +20,4 @@ class Booking(models.Model):
     date = models.DateField()
 
     def __str__(self):
-        return self.room.name
+        return f"{self.room} - {self.date} - {self.start_time} - {self.end_time}"
