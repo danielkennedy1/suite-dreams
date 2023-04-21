@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book | Suite Dreams</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto">
+		<div class="flex flex-col items-center  h-screen m-10">
+			<h1 class="text-4xl font-bold">Suite Dreams</h1>
+			
+			<div class="bg-white shadow-lg rounded-lg flex w-1/2 m-10 items-center justify-center">
+				<form class="p-4 m-4">
+					<div class="flex flex-col gap-4">
+						<h1 class="text-3xl font-bold text-center mb-5">Book a room</h1>
+						<div class="flex flex-row gap-4 items-center ">
+							<label for="organiser" class="font-bold">Organiser</label>
+							<input type="text" name="organiser" id="organiser" class="border-2 border-gray-300 p-2 rounded-lg w-full" placeholder="Full Name"/>
+						</div>
+						<div class="flex flex-row gap-4 items-center">
+							<label for="date" class="font-bold">Date</label>
+							<input type="date" name="date" id="date" class="border-2 border-gray-300 p-2 rounded-lg w-full"/>
+						</div>
+						<div class="flex flex-row items-center gap-4">
+							<label for="start" class="font-bold">Start</label>
+							<input type="time" name="start" id="start" class="border-2 border-gray-300 p-2 rounded-lg w-full"/>
+						</div>
+						<div class="flex flex-row items-center gap-4 ">
+							<label for="end" class="font-bold">End</label>
+							<input type="time" name="end" id="end" class="border-2 border-gray-300 p-2 rounded-lg w-full"/>
+						</div>
+					</div>
+
+					<div class="flex flex-row gap-4 my-10 justify-center">
+						<div class="w-20 h-20 bg-gray-300 rounded-lg"> </div>
+						<div class="w-20 h-20 bg-gray-300 rounded-lg"> </div>
+						<div class="w-20 h-20 bg-gray-300 rounded-lg"> </div>
+					</div>
+
+					<div class="flex flex-col">
+						<input type="submit" value="Book" class="bg-blue-500 text-white font-bold p-2 rounded-lg w-full cursor-pointer"/>
+						<a href="/" class="bg-red-500 text-white font-bold p-2 rounded-lg w-full text-center mt-3">Cancel</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
