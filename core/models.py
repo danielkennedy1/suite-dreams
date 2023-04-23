@@ -1,5 +1,6 @@
 from django.db import models
-
+from django.utils import timezone
+from django.core.exceptions import ValidationError
 # Create your models here.
 
 
@@ -13,6 +14,20 @@ class Room(models.Model):
 
 
 class Booking(models.Model):
+
+    def clean(self) -> None:
+        # Validate that the booking in the future
+        start_dateTime = timezone.datetime.combine(self.date, self.start_time)
+        if start_dateTime < timezone.now():
+            raise ValidationError("Booking cannot be in the past")
+        end_dateTime = timezone.datetime.combine(self.date, self.end_time)
+        if end_dateTime < timezone.now():
+            raise ValidationError("Booking cannot be in the past")
+        # Validate that the booking start time is before the end time
+        if start_dateTime > end_dateTime:
+            raise ValidationError("Booking start time must be before end time")
+        
+
     id = models.IntegerField(primary_key=True)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     start_time = models.TimeField()
