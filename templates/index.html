@@ -29,6 +29,7 @@
                 <th scope="col" class="px-6 py-3">Room</th>
                 <th scope="col" class="px-6 py-3">Start</th>
                 <th scope="col" class="px-6 py-3">End</th>
+                <th scope="col" class="px-6 py-3">Organiser</th>
                 <th scope="col" class="px-6 py-3">Details</th>
               </tr>
             </thead>
@@ -42,8 +43,15 @@
                   <td class="px-6 py-4">{{ booking.room }}</td>
                   <td class="px-6 py-4">{{ booking.start_time }}</td>
                   <td class="px-6 py-4">{{ booking.end_time }}</td>
+                   <td class="px-6 py-4">{{ booking.organiser }}</td>
                   <td class="px-6 py-4">{{ booking.details }}</td>
                 </tr>
+
+                {% empty %}
+                <tr class="bg-white border-b">
+                  <td class="px-6 py-4" colspan=7>No bookings</td>
+                </tr>
+                
                 
                 {% endfor %}
               

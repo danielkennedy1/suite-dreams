@@ -10,7 +10,7 @@ class Room(models.Model):
     capacity = models.IntegerField()
 
     def __str__(self):
-        return f"{self.name} - {self.capacity}"
+        return f"{self.name} ({self.capacity} pax)"
 
 
 class Booking(models.Model):
