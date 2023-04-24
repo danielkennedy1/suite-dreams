@@ -1,22 +1,26 @@
 from django.shortcuts import redirect, render
 
-from core.models import Booking
+from core.models import Booking, Room
 
-
-# Create your views here.
 def book(request):
-    return render(request, 'book.html')
+    x = Room(name="Room 1", capacity=10)
+    x.save()
+
+    rooms = Room.objects.all()
+    return render(request, 'book.html', {'rooms': rooms})
 
 
 def index(request):
-    return render(request, 'index.html')
+    bookings = Booking.objects.all()
+    return render(request, 'index.html', {'bookings': bookings})
 
 def create_booking(request, method=["POST"]):
     organiser = request.POST.get('organiser')
     date = request.POST.get('date')
     start = request.POST.get('start')
     end = request.POST.get('end')
-    room = request.POST.get('room')
+
+    room = Room.objects.get(id=request.POST.get('room'))
 
     booking = Booking.objects.create(organiser=organiser, date=date, start_time=start, end_time=end, room=room)
     booking.save()

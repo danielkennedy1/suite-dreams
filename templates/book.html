@@ -21,6 +21,8 @@
 							<label for="organiser" class="font-bold">Organiser</label>
 							<input type="text" name="organiser" id="organiser" class="border-2 border-gray-300 p-2 rounded-lg w-full" placeholder="Full Name"/>
 						</div>
+
+
 						<div class="flex flex-row gap-4 items-center">
 							<label for="date" class="font-bold">Date</label>
 							<input type="date" name="date" id="date" class="border-2 border-gray-300 p-2 rounded-lg w-full"/>
@@ -35,11 +37,16 @@
 						</div>
 					</div>
 
-					<div class="flex flex-row gap-4 my-10 justify-center">
-						<div class="w-20 h-20 bg-gray-300 rounded-lg"> </div>
-						<div class="w-20 h-20 bg-gray-300 rounded-lg"> </div>
-						<div class="w-20 h-20 bg-gray-300 rounded-lg"> </div>
+					<div class="border-[2px] border-black rounded-lg my-5 px-4">
+					<h3 class="text-2xl font-bold mt-5">Room</h3>
+					<select name="room" id="room" class="border-2 border-gray-300 p-2 rounded-lg w-full my-5">
+						{% for room in rooms %}
+							<option value="{{ room.id }}">{{ room.name }}</option>
+						{% endfor %}
 					</div>
+					</select>
+				</div>
+
 
 					<div class="flex flex-col">
 						<input type="submit" value="Book" class="bg-blue-500 text-white font-bold p-2 rounded-lg w-full cursor-pointer"/>
