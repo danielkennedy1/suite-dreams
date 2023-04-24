@@ -30,6 +30,7 @@ class Booking(models.Model):
 
     id = models.IntegerField(primary_key=True)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    organiser = models.CharField(max_length=100)
     start_time = models.TimeField()
     end_time = models.TimeField()
     date = models.DateField()
