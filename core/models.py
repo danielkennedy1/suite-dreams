@@ -10,26 +10,24 @@ class Room(models.Model):
     capacity = models.IntegerField()
 
     def __str__(self):
-        return f"{self.name} - {self.capacity}"
+        return f"{self.name} ({self.capacity} pax)"
 
 
 class Booking(models.Model):
 
     def clean(self) -> None:
-        # Validate that the booking in the future
         start_dateTime = timezone.datetime.combine(self.date, self.start_time)
         if start_dateTime < timezone.now():
             raise ValidationError("Booking cannot be in the past")
-        end_dateTime = timezone.datetime.combine(self.date, self.end_time)
-        if end_dateTime < timezone.now():
-            raise ValidationError("Booking cannot be in the past")
-        # Validate that the booking start time is before the end time
         if start_dateTime > end_dateTime:
             raise ValidationError("Booking start time must be before end time")
         
 
     id = models.IntegerField(primary_key=True)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
+    organiser = models.CharField(max_length=100)
+    title = models.CharField(max_length=100)
+    details = models.TextField()
     start_time = models.TimeField()
     end_time = models.TimeField()
     date = models.DateField()
