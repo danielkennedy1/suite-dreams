@@ -1,6 +1,5 @@
 from core.models import Booking, Room
 
-
 def create_booking(request):
     room = Room.objects.get(id=request.POST.get('room'))
     Booking.objects.create(
