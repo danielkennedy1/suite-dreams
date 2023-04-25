@@ -17,3 +17,10 @@ $ python manage.py runserver
 ```bash
 $ python manage.py test
 ```
+
+# Coverage
+
+```bash
+$ coverage run manage.py test
+$ coverage report -m
+```
