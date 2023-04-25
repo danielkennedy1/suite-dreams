@@ -37,7 +37,3 @@ class PastBooking(TestCase):
                         })
         
         self.assertEqual(res.status_code, 301)
-            
-                
-
-      
