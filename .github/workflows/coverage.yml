@@ -41,7 +41,8 @@ jobs:
                 coverage xml 
 
             - name: Generate coverage badge
-              run: coverage-badge -o -f coverage.svg
+              run: | rm coverage.svg
+                coverage-badge -o coverage.svg
             
             - name: Upload coverage report
               uses: actions/upload-artifact@v2
