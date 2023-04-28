@@ -5,6 +5,10 @@ $ pip install -r requirements.txt
 ```
 
 ```bash
+$ python manage.py makemigrations
+```
+
+```bash
 $ python manage.py migrate
 ```
 
@@ -12,7 +16,7 @@ $ python manage.py migrate
 $ python manage.py runserver
 ```
 
-# Run tests
+# Test
 
 ```bash
 $ python manage.py test
@@ -22,5 +26,6 @@ $ python manage.py test
 
 ```bash
 $ coverage run manage.py test
-$ coverage report -m
 ```
+
+![Coverage](coverage.svg)
