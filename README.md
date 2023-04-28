@@ -1,6 +1,4 @@
 ![Coverage](coverage.svg)
-![Status](https://github.com/danielkennedy1/suite-dreams/actions/workflows/django/badge.svg)
-![Status](https://github.com/danielkennedy1/suite-dreams/actions/workflows/coverage/badge.svg)
 ---
 
 # Install and Run 
