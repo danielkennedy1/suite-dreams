@@ -40,10 +40,18 @@ jobs:
                 coverage run --source='.' manage.py test
                 coverage report
                 coverage xml 
+
+            - name: Generate coverage badge
+              run: coverage-badge -o coverage.svg
             
-            # Save coverage report as artifact
-            - name: Save coverage report as artifact
+            - name: Upload coverage report
               uses: actions/upload-artifact@v2
               with:
-                name: coverage-report
+                name: coverage
                 path: coverage.xml
+                
+            - name: Upload coverage badge
+                uses: actions/upload-artifact@v2
+                with:
+                  name: coverage-badge
+                  path: coverage.svg

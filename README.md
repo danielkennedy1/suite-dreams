@@ -1,26 +1,15 @@
-# Setup 
+![Coverage](coverage.svg)
+
+
+
+# Install and Run 
 
 ```bash
 $ pip install -r requirements.txt
 ```
 
 ```bash
+$ python manage.py makemigrations
 $ python manage.py migrate
-```
-
-```bash
 $ python manage.py runserver
-```
-
-# Run tests
-
-```bash
-$ python manage.py test
-```
-
-# Coverage
-
-```bash
-$ coverage run manage.py test
-$ coverage report -m
 ```
