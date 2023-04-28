@@ -1,6 +1,5 @@
 ![Coverage](coverage.svg)
-
-
+---
 
 # Install and Run 
 
