@@ -1,6 +1,3 @@
-
-
-# Coverage
 ![Coverage](coverage.svg)
 
 
