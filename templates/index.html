@@ -1,66 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Suite Dreams</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+	</head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Book | Suite Dreams</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
+	<body class="bg-gray-100">
+		<div class="container mx-auto">
+			<div class="flex flex-col items-center h-screen m-10">
+				<h1 class="text-4xl font-bold">Suite Dreams</h1>
+				<h3 class="text-xl m-2 text-gray-700 italic">
+					"It's a dream to book a suite with Suite Dreams!"
+				</h3>
+				<a
+					class="bg-blue-500 text-white font-bold p-2 mt-10 rounded-lg w-1/2 cursor-pointer text-center"
+					href="/book"
+					id="bookButton"
+					>Book a room &rarr;</a
+				>
 
-<body class="bg-gray-100">
-  <div class="container mx-auto">
-    <div class="flex flex-col items-center h-screen m-10">
-      <h1 class="text-4xl font-bold">Suite Dreams</h1>
-      <h3 class="text-xl m-2 text-gray-700 italic">"It's a dream to book a suite with Suite Dreams!"</h3>
-      <a class="bg-blue-500 text-white font-bold p-2 mt-10 rounded-lg w-1/2 cursor-pointer text-center"
-          href="/book">Book a room &rarr;</a>
+				<div
+					class="bg-white shadow-lg rounded-lg flex flex-col w-2/3 m-10 items-center justify-center"
+				>
+					<div class="relative overflow-x-auto shadow-md sm:rounded-lg my-10">
+						<table class="w-full text-sm text-left" id="bookingsTable">
+							<thead class="text-xs uppercase bg-gray-200">
+								<tr>
+									<th scope="col" class="px-6 py-3">Date</th>
+									<th scope="col" class="px-6 py-3">Title</th>
+									<th scope="col" class="px-6 py-3">Room</th>
+									<th scope="col" class="px-6 py-3">Start</th>
+									<th scope="col" class="px-6 py-3">End</th>
+									<th scope="col" class="px-6 py-3">Organiser</th>
+									<th scope="col" class="px-6 py-3">Details</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for booking in bookings %}
 
-      <div class="bg-white shadow-lg rounded-lg flex flex-col w-2/3 m-10 items-center justify-center">
-        
+								<tr class="bg-white border-b">
+									<td class="px-6 py-4">{{ booking.date }}</td>
+									<td class="px-6 py-4">{{ booking.title }}</td>
+									<td class="px-6 py-4">{{ booking.room }}</td>
+									<td class="px-6 py-4">{{ booking.start_time }}</td>
+									<td class="px-6 py-4">{{ booking.end_time }}</td>
+									<td class="px-6 py-4">{{ booking.organiser }}</td>
+									<td class="px-6 py-4">{{ booking.details }}</td>
+								</tr>
 
-        <div class="relative overflow-x-auto shadow-md sm:rounded-lg my-10">
-          <table class="w-full text-sm text-left" id="bookingsTable">
-            <thead class="text-xs uppercase bg-gray-200">
-              <tr>
-                <th scope="col" class="px-6 py-3">Date</th>
-                <th scope="col" class="px-6 py-3">Title</th>
-                <th scope="col" class="px-6 py-3">Room</th>
-                <th scope="col" class="px-6 py-3">Start</th>
-                <th scope="col" class="px-6 py-3">End</th>
-                <th scope="col" class="px-6 py-3">Organiser</th>
-                <th scope="col" class="px-6 py-3">Details</th>
-              </tr>
-            </thead>
-            <tbody>
+								{% empty %}
+								<tr class="bg-white border-b">
+									<td class="px-6 py-4" colspan="7">No bookings</td>
+								</tr>
 
-              {% for booking in bookings %}
-
-                <tr class="bg-white border-b">
-                  <td class="px-6 py-4">{{ booking.date }}</td>
-                  <td class="px-6 py-4">{{ booking.title }}</td>
-                  <td class="px-6 py-4">{{ booking.room }}</td>
-                  <td class="px-6 py-4">{{ booking.start_time }}</td>
-                  <td class="px-6 py-4">{{ booking.end_time }}</td>
-                   <td class="px-6 py-4">{{ booking.organiser }}</td>
-                  <td class="px-6 py-4">{{ booking.details }}</td>
-                </tr>
-
-                {% empty %}
-                <tr class="bg-white border-b">
-                  <td class="px-6 py-4" colspan=7>No bookings</td>
-                </tr>
-                
-                
-                {% endfor %}
-              
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
-</body>
-
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
 </html>
