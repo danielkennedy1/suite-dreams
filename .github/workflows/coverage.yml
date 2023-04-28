@@ -2,7 +2,6 @@
 
 name: Coverage
 
-
 on:
   push:
     branches: [ main ]
@@ -49,9 +48,9 @@ jobs:
               with:
                 name: coverage
                 path: coverage.xml
-                
+
             - name: Upload coverage badge
-                uses: actions/upload-artifact@v2
-                with:
-                  name: coverage-badge
-                  path: coverage.svg
+              uses: actions/upload-artifact@v2
+              with:
+                name: coverage-badge
+                path: coverage.svg
