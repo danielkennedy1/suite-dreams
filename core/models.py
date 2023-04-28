@@ -1,8 +1,6 @@
 from django.db import models
 from django.utils import timezone
 from django.core.exceptions import ValidationError
-# Create your models here.
-
 
 class Room(models.Model):
     id = models.IntegerField(primary_key=True)
