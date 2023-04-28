@@ -38,7 +38,7 @@ jobs:
               run: |
                 coverage run --source='.' manage.py test
                 coverage report
-                coverage xml 
+                coverage html 
 
             - name: Generate coverage badge
               run: coverage-badge -o coverage.svg -f
@@ -47,7 +47,7 @@ jobs:
               uses: actions/upload-artifact@v2
               with:
                 name: coverage
-                path: coverage.xml
+                path: htmlcov/index.html
 
             - name: Upload coverage badge
               uses: actions/upload-artifact@v2
