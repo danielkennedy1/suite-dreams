@@ -37,9 +37,17 @@ def create_booking(booking):
     
     # 7. Booking is in the future
     start_dateTime = timezone.datetime.combine(booking['date'], booking['start_time'])
-    if start_dateTime < timezone.now():
+    if start_dateTime < timezone.now().replace(tzinfo=None):
         errors.append(ValidationError("Booking cannot be in the past", code='booking_in_past', params={'start_dateTime': start_dateTime}))
     
+    # 8. Organiser is too long (max 100 chars)
+    if len(booking['organiser']) > 100:
+        errors.append(ValidationError("Organiser is too long, max 100 characters", code='organiser_too_long', params={'organiser': booking['organiser']}))
+
+    # 9. Title is too long (max 100 chars)
+    if len(booking['title']) > 100:
+        errors.append(ValidationError("Title is too long, max 100 characters", code='title_too_long', params={'title': booking['title']}))
+
     if errors:
         raise ValidationError(errors)
 
