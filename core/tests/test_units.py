@@ -1,11 +1,11 @@
 from django.test import TestCase
-from core.lib import create_booking
-from core.models import Room, Room
-from django.db.utils import IntegrityError
+from core.lib import create_booking, booking_overlaps
+from core.models import Room, Booking
+#from django.db.utils import IntegrityError
 from django.core.exceptions import ValidationError
 from unittest.case import _AssertRaisesContext
-
 import sys
+from parameterized import parameterized
 
 class CreateBookingTestCase(TestCase):
 
@@ -29,21 +29,34 @@ class CreateBookingTestCase(TestCase):
              "room_id": 1,
              "title": "Test",
              "details": "Test"
-        } 
+        }
+        self.correct_booking_2 = self.correct_booking.copy()
+        self.correct_booking_2["date"] = "2024-01-02"
         Room.objects.create(id=1, name="Test Room", capacity=1)
+        Booking.objects.create(
+            id=1, 
+            room_id=1, 
+            organiser="Test", 
+            title="Test", 
+            details="Test", 
+            start_time="10:00", 
+            end_time="11:00", 
+            date="2024-01-02"
+        )
 
     def __init__(self, methodName: str = "runTest") -> None:
         super().__init__(methodName)
             
     
-    def test_create_booking(self):
-        create_booking(self.correct_booking)
+    def test_1create_booking(self):
+        create_booking(self.correct_booking)        
         self.assertTrue(True)
     
     #Book a room that doesn't exist
     def test_create_booking_invalid_room(self):
         booking = self.correct_booking.copy()
         booking["room_id"] = 100
+        booking["date"] = "2024-01-03"
         with self.assertRaises(Room.DoesNotExist):
             create_booking(booking)
     
@@ -87,3 +100,22 @@ class CreateBookingTestCase(TestCase):
         with self.assertRaises(ValidationError) as e:
             create_booking(booking)
         self.assertEqual(e.exception.code, "end_too_late")
+
+    #booking overlaps with another booking
+    #note: correct_booking_2 is 10:00 - 11:00 on 2024-01-02
+    @parameterized.expand([
+        ("09:00", "10:00", False),
+        ("09:00", "10:01", True),
+        ("09:00", "11:00", True),
+        ("09:00", "11:01", True),
+        ("10:00", "11:00", True),
+        ("10:00", "11:01", True),
+        ("10:30", "12:00", True),
+        ("11:00", "12:00", False),
+        ("11:01", "12:00", False)
+    ])
+    def test_2booking_overlap(self, start_time, end_time, expected):
+        booking = self.correct_booking_2.copy()
+        booking["start_time"] = start_time
+        booking["end_time"] = end_time
+        self.assertEqual(expected, booking_overlaps(booking))
