@@ -122,3 +122,15 @@ class CreateBookingTestCase(TestCase):
         booking["start_time"] = start_time
         booking["end_time"] = end_time
         self.assertEqual(expected, booking_overlaps(booking))
+
+    # Fields are too long
+    @parameterized.expand([
+        ("organiser", "a" * 101),
+        ("title", "a" * 101),
+    ])
+    def test_create_booking_field_too_long(self, field, value):
+        booking = self.correct_booking.copy()
+        booking[field] = value
+        with self.assertRaises(ValidationError) as e:
+            create_booking(booking)
+        self.assertEqual(e.exception.error_list[0].code, f"{field}_too_long")

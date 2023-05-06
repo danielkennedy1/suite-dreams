@@ -27,7 +27,12 @@ def create_booking(booking):
     for field in ["organiser", "title", "details"]:
         if booking[field] == "":
             errors.append(ValidationError(f"{field} cannot be empty", code=f"empty_{field}"))
-    
+
+    # Check that the values aren't too long
+    for field in ["organiser", "title"]:
+        if len(booking[field]) > 100:
+            errors.append(ValidationError(f"{field} cannot be longer than 100 characters", code=f"{field}_too_long"))
+
     # Check that booking start time is after opening time (9:00)
     if timezone.datetime.strptime(booking["start_time"], "%H:%M").time() < timezone.datetime.strptime("09:00", "%H:%M").time():
         errors.append(ValidationError("Booking start time is outside of opening hours", code='start_too_early', params={'start_time': booking['start_time']}))
