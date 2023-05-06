@@ -5,6 +5,7 @@ from django.core.exceptions import ValidationError
 from unittest.case import _AssertRaisesContext
 import sys
 from parameterized import parameterized
+import datetime
 
 class CreateBookingTestCase(TestCase):
 
@@ -134,3 +135,21 @@ class CreateBookingTestCase(TestCase):
         with self.assertRaises(ValidationError) as e:
             create_booking(booking)
         self.assertEqual(e.exception.error_list[0].code, f"{field}_too_long")
+
+    # Booking is in the past
+    @parameterized.expand([
+        (datetime.timedelta(days=-1)),
+        (datetime.timedelta(days=-2)),
+        (datetime.timedelta(days=-300)),
+    ])
+    def test_create_booking_in_past(self, delta):
+        booking = self.correct_booking.copy()
+        booking["date"] = datetime.datetime.now().date().strftime("%Y-%m-%d")
+        # Modify the booking by delta
+        booking_time = datetime.datetime.strptime(booking["date"] + " " + booking["start_time"], "%Y-%m-%d %H:%M")
+        booking_time += delta
+        booking["date"] = booking_time.strftime("%Y-%m-%d")
+        booking["start_time"] = booking_time.strftime("%H:%M")
+        with self.assertRaises(ValidationError) as e:
+            create_booking(booking)
+        self.assertEqual(e.exception.error_list[0].code, "booking_in_past")

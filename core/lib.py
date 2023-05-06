@@ -17,7 +17,14 @@ def booking_overlaps(booking):
             return True
     return False
 
-# Check that booking fields arent empty
+# Check that booking is not in the past
+def booking_in_past(booking):
+    now = timezone.datetime.now()
+    booking_datetime = timezone.datetime.strptime(
+        booking["date"] + " " + booking["start_time"], 
+        "%Y-%m-%d %H:%M"
+    )
+    return booking_datetime < now
 
 def create_booking(booking):
 
@@ -48,6 +55,9 @@ def create_booking(booking):
     # Check that booking does not overlap with another booking
     if booking_overlaps(booking):
         errors.append(ValidationError("Booking overlaps with another booking", code='overlap', params={'date': booking['date'], 'start_time': booking['start_time'], 'end_time': booking['end_time']}))
+
+    if booking_in_past(booking):
+        errors.append(ValidationError("Booking is in the past", code='booking_in_past', params={'date': booking['date'], 'start_time': booking['start_time'], 'end_time': booking['end_time']}))
 
     if errors:
         raise ValidationError(errors)
