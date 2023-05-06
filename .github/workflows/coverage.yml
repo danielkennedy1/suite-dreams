@@ -2,7 +2,6 @@
 
 name: Coverage
 
-
 on:
   push:
     branches: [ main ]
@@ -39,11 +38,21 @@ jobs:
               run: |
                 coverage run --source='.' manage.py test
                 coverage report
-                coverage xml 
-            
-            # Save coverage report as artifact
-            - name: Save coverage report as artifact
+                coverage html 
+
+            - name: Upload coverage report to repo
               uses: actions/upload-artifact@v2
               with:
                 name: coverage-report
-                path: coverage.xml
+                path: htmlcov/index.html
+
+            - name: Generate coverage badge
+              run: coverage-badge -o coverage.svg -f
+            
+            - name: Upload coverage badge
+              uses: actions/upload-artifact@v2
+              with:
+                name: coverage-badge
+                path: coverage.svg
+
+            
