@@ -68,13 +68,17 @@ class CreateBookingTestCase(TestCase):
         self.assertEqual(e.exception.code, "invalid_date")
     
     #empty fields
-    def test_create_booking_empty_fields(self):
-        for field in ["organiser"]:#, "title", "details"]:
-            booking = self.correct_booking.copy()
-            booking[field] = ""
-            with self.assertRaises(ValidationError) as e:
-                create_booking(booking)
-                self.assertEqual(e.exception.code, f"empty_{field}")
+    @parameterized.expand([
+        "organiser",
+        "title",
+        "details"
+    ])
+    def test_create_booking_empty_fields(self, field):
+        booking = self.correct_booking.copy()
+        booking[field] = ""
+        with self.assertRaises(ValidationError) as e:
+            create_booking(booking)
+            self.assertEqual(e.exception.code, f"empty_{field}")
 
     #invalid time
     def test_create_booking_invalid_time(self):
