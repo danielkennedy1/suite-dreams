@@ -1,7 +1,6 @@
 from django.test import TestCase
 from core.lib import create_booking, booking_overlaps
 from core.models import Room, Booking
-#from django.db.utils import IntegrityError
 from django.core.exceptions import ValidationError
 from unittest.case import _AssertRaisesContext
 import sys
@@ -69,13 +68,17 @@ class CreateBookingTestCase(TestCase):
         self.assertEqual(e.exception.code, "invalid_date")
     
     #empty fields
-    def test_create_booking_empty_fields(self):
-        for field in ["organiser"]:#, "title", "details"]:
-            booking = self.correct_booking.copy()
-            booking[field] = ""
-            with self.assertRaises(ValidationError) as e:
-                create_booking(booking)
-                self.assertEqual(e.exception.code, f"empty_{field}")
+    @parameterized.expand([
+        "organiser",
+        "title",
+        "details"
+    ])
+    def test_create_booking_empty_fields(self, field):
+        booking = self.correct_booking.copy()
+        booking[field] = ""
+        with self.assertRaises(ValidationError) as e:
+            create_booking(booking)
+            self.assertEqual(e.exception.code, f"empty_{field}")
 
     #invalid time
     def test_create_booking_invalid_time(self):
@@ -91,7 +94,7 @@ class CreateBookingTestCase(TestCase):
         booking["start_time"] = "07:00"
         with self.assertRaises(ValidationError) as e:
             create_booking(booking)
-        self.assertEqual(e.exception.code, "start_too_early")
+        self.assertEqual(e.exception.error_list[0].code, "start_too_early")
 
     #booking too late (after 5pm)
     def test_create_booking_too_late(self):
@@ -99,7 +102,7 @@ class CreateBookingTestCase(TestCase):
         booking["end_time"] = "17:01"
         with self.assertRaises(ValidationError) as e:
             create_booking(booking)
-        self.assertEqual(e.exception.code, "end_too_late")
+        self.assertEqual(e.exception.error_list[0].code, "end_too_late")
 
     #booking overlaps with another booking
     #note: correct_booking_2 is 10:00 - 11:00 on 2024-01-02
@@ -119,3 +122,15 @@ class CreateBookingTestCase(TestCase):
         booking["start_time"] = start_time
         booking["end_time"] = end_time
         self.assertEqual(expected, booking_overlaps(booking))
+
+    # Fields are too long
+    @parameterized.expand([
+        ("organiser", "a" * 101),
+        ("title", "a" * 101),
+    ])
+    def test_create_booking_field_too_long(self, field, value):
+        booking = self.correct_booking.copy()
+        booking[field] = value
+        with self.assertRaises(ValidationError) as e:
+            create_booking(booking)
+        self.assertEqual(e.exception.error_list[0].code, f"{field}_too_long")
