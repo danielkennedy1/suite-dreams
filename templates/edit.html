@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit | Suite Dreams</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto">
+		<div class="flex flex-col items-center  h-screen m-10">
+			<h1 class="text-4xl font-bold">Suite Dreams</h1>
+			
+			<div class="bg-white shadow-lg rounded-lg flex w-1/2 m-10 items-center justify-center">
+				<form class="p-4 m-4" method="POST">
+					{% csrf_token %}
+					<div class="flex flex-col gap-4">
+						<h1 class="text-3xl font-bold text-center">Book a room</h1>
+
+						<div class="border-[2px] border-black rounded-lg mt-5 px-4">
+							<div class="flex flex-row items-center gap-4 m-2">
+								<label for="title" class="font-bold">Title</label>
+								<input type="text" name="title" id="title" value={{booking.title}} class="border-2 border-gray-300 p-2 rounded-lg w-full" placeholder="Meeting Title" required/>
+							</div>
+
+							<div class="flex flex-row items-center gap-4 m-2">
+								<label for="details" class="font-bold">Details</label>
+								<input type="text" name="details" id="details" value={{booking.details}} class="border-2 border-gray-300 p-2 rounded-lg w-full" placeholder="Meeting details" required/>
+							</div>
+						</div>
+
+						<div class="flex flex-row gap-4 items-center ">
+							<label for="organiser" class="font-bold">Organiser</label>
+							<input type="text" name="organiser" id="organiser" value={{booking.organiser}} class="border-2 border-gray-300 p-2 rounded-lg w-full" placeholder="Full Name" required/>
+						</div>
+
+
+						<div class="flex flex-row gap-4 items-center">
+							<label for="date" class="font-bold">Date</label>
+							<input type="date" name="date" id="date" value={{booking.date}} class="border-2 border-gray-300 p-2 rounded-lg w-full" required/>
+						</div>
+						<div class="flex flex-row items-center gap-4">
+							<label for="start" class="font-bold">Start</label>
+							<input type="time" name="start" id="start" value={{booking.start_time}} class="border-2 border-gray-300 p-2 rounded-lg w-full" required/>
+						</div>
+						<div class="flex flex-row items-center gap-4 ">
+							<label for="end" class="font-bold">End</label>
+							<input type="time" name="end" id="end" value={{booking.end_time}} class="border-2 border-gray-300 p-2 rounded-lg w-full" required/>
+						</div>
+					</div>
+
+
+
+					<div class="border-[2px] border-black rounded-lg my-5 px-4">
+					<h3 class="text-2xl font-bold mt-5">Room</h3>
+					<select name="room" id="room" class="border-2 border-gray-300 p-2 rounded-lg w-full my-5" required>
+						{% for room in rooms %}
+						{% if room.id == booking.room.id %}
+						<option value="{{ room.id }}" selected>{{ room.name }}</option>
+						{% else %}
+							<option value="{{ room.id }}">{{ room.name }}</option>
+						{% endif %}
+						{% endfor %}
+					</div>
+					</select>
+				</div>
+
+
+					<div class="flex flex-col">
+						<input type="submit" value="Book" class="bg-blue-500 text-white font-bold p-2 rounded-lg w-full cursor-pointer" id="submit"/>
+						<a href="/" class="bg-red-500 text-white font-bold p-2 rounded-lg w-full text-center mt-3">Cancel</a>
+					</div>
+
+					{% if error %}
+						<p class="text-red-500 text-center mt-5">{{ error }}</p>
+					{% endif %}
+				</form>
+			</div>
+		</div>
+	</div>
+	<script>
+		document.getElementById('date').valueAsDate = new Date();
+		var d = new Date();
+		d.setHours(d.getHours() + 1);
+		document.getElementById('start').value = d.toTimeString().substring(0, 5);
+
+		var d = new Date();
+		d.setHours(d.getHours() + 2);
+		document.getElementById('end').value = d.toTimeString().substring(0, 5);
+	</script>
+</body>
+</html>

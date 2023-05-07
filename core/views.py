@@ -35,5 +35,26 @@ def delete(request, id):
     return redirect('index')
 
 
+def edit(request, id):
+    booking = Booking.objects.get(id=id)
+    rooms = Room.objects.all()
+    if request.method == 'POST':
+        # update booking
+        try:
+            booking.organiser = request.POST.get('organiser')
+            booking.date = request.POST.get('date')
+            booking.start_time = request.POST.get('start')
+            booking.end_time = request.POST.get('end')
+            booking.room_id = request.POST.get('room')
+            booking.title = request.POST.get('title')
+            booking.details = request.POST.get('details')
+            booking.save()
+        except Exception as e:
+            return render(request, 'edit.html', {'booking': booking, 'rooms': rooms, 'error': e})
+        return redirect('index')
+
+    return render(request, 'edit.html', {'booking': booking, 'rooms': rooms})
+
+
 def index(request):
     return render(request, 'index.html', {'bookings': Booking.objects.all()})

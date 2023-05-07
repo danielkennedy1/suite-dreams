@@ -59,6 +59,11 @@
 									<td class="px-6 py-4">{{ booking.details }}</td>
 									<td class="px-6 py-4">
 										<a
+											class="bg-blue-500 text-white font-bold p-2 rounded-lg cursor-pointer"
+											href="/edit/{{ booking.id }}"
+											>Edit</a
+										>
+										<a
 											class="bg-red-500 text-white font-bold p-2 rounded-lg cursor-pointer"
 											href="/delete/{{ booking.id }}"
 											>Delete</a
