@@ -9,6 +9,8 @@ import datetime
 
 class CreateBookingTestCase(TestCase):
 
+    # TODO - Delete these methods when done
+
     def display_code(self, err: _AssertRaisesContext):
         error = "\n\nEXCEPTION CODE: " + str(err.exception.code) + "  <------" + "\n\n"
         sys.stderr.write(str(error))
@@ -135,6 +137,8 @@ class CreateBookingTestCase(TestCase):
         with self.assertRaises(ValidationError) as e:
             create_booking(booking)
         self.assertEqual(e.exception.error_list[0].code, f"{field}_too_long")
+
+    # TODO: Mock the datetime module so we can test this properly
 
     # Booking is in the past
     @parameterized.expand([

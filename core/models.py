@@ -13,14 +13,6 @@ class Room(models.Model):
 
 class Booking(models.Model):
 
-    def clean(self) -> None:
-        start_dateTime = timezone.datetime.combine(self.date, self.start_time)
-        if start_dateTime < timezone.now():
-            raise ValidationError("Booking cannot be in the past")
-        if start_dateTime > end_dateTime:
-            raise ValidationError("Booking start time must be before end time")
-        
-
     id = models.IntegerField(primary_key=True)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     organiser = models.CharField(max_length=100)
@@ -32,3 +24,11 @@ class Booking(models.Model):
 
     def __str__(self):
         return f"{self.room} - {self.date} - {self.start_time} - {self.end_time}"
+    
+    class Meta:
+        constraints = [
+            #models.UniqueConstraint(fields=['room', 'date', 'start_time'], name='unique_booking'),
+            #models.CheckConstraint(check=models.Q(start_time__lt=models.F('end_time')), name='start_time_before_end_time'),
+            #models.CheckConstraint(check=models.Q(start_time__gte=timezone.time.strptime("09:00")), name='start_time_after_opening_time'),
+        ]
+    
