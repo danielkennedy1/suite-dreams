@@ -18,7 +18,7 @@ def book(request):
                 }
             )
         except Exception as e:
-            return render(request, 'book.html', {'rooms': Room.objects.all(), 'error': e})
+            return render(request, 'book.html', {'rooms': Room.objects.all(), 'error_messages': e})
 
         return redirect('index')
     else:
