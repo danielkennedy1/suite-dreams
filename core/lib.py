@@ -89,4 +89,8 @@ def create_booking(booking):
 
 
 def delete_booking(id):
-    Booking.objects.filter(id=id).delete()
+    booking = Booking.objects.get(id=id)
+    if not booking:
+        raise ValidationError("Booking does not exist",
+                              code='booking_does_not_exist')
+    booking.delete()

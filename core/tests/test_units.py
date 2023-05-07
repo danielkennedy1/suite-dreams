@@ -180,5 +180,5 @@ class TestDeleteBooking(TestCase):
         self.assertTrue(True)
 
     def test_delete_booking_invalid_id(self):
-        with self.assertRaises(Booking.DoesNotExist):
+        with self.assertRaises(ValidationError):
             delete_booking(100)
