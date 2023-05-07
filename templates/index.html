@@ -23,10 +23,17 @@
 				>
 
 				<div
-					class="bg-white shadow-lg rounded-lg flex flex-col w-2/3 m-10 items-center justify-center"
+					class="bg-white shadow-lg rounded-lg flex flex-col p-5 mt-5 items-center justify-center"
 				>
-					<div class="relative overflow-x-auto shadow-md sm:rounded-lg my-10">
-						<table class="w-full text-sm text-left" id="bookingsTable">
+					{% if error %}
+					<div
+						class="bg-red-500 text-white font-bold p-2 rounded-lg cursor-pointer m-5"
+					>
+						{{ error }}
+					</div>
+					{% endif %}
+					<div class="shadow-md sm:rounded-lg my-10">
+						<table class="text-sm text-left" id="bookingsTable">
 							<thead class="text-xs uppercase bg-gray-200">
 								<tr>
 									<th scope="col" class="px-6 py-3">Date</th>

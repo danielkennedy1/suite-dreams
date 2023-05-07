@@ -27,7 +27,11 @@ def book(request):
 
 
 def delete(request, id):
-    delete_booking(id)
+    try:
+        delete_booking(id)
+
+    except Exception as e:
+        return render(request, 'index.html', {'bookings': Booking.objects.all(), 'error': e})
     return redirect('index')
 
 
