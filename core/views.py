@@ -5,20 +5,19 @@ from core.models import Booking, Room
 
 def book(request):
     if request.method == 'POST':
+        booking = {
+            "organiser": request.POST.get('organiser'),
+            "date": request.POST.get('date'),
+            "start_time": request.POST.get('start'),
+            "end_time": request.POST.get('end'),
+            "room_id": request.POST.get('room'),
+            "title": request.POST.get('title'),
+            "details": request.POST.get('details')
+        }
         try:
-            create_booking(
-                {
-                    "organiser": request.POST.get('organiser'),
-                    "date": request.POST.get('date'),
-                    "start_time": request.POST.get('start'),
-                    "end_time": request.POST.get('end'),
-                    "room_id": request.POST.get('room'),
-                    "title": request.POST.get('title'),
-                    "details": request.POST.get('details')
-                }
-            )
+            create_booking(booking)
         except Exception as e:
-            return render(request, 'book.html', {'rooms': Room.objects.all(), 'error_messages': e})
+            return render(request, 'book.html', {'rooms': Room.objects.all(), 'error_messages': e, 'booking': booking, "room_id": int(booking["room_id"])})
 
         return redirect('index')
     else:

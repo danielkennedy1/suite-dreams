@@ -30,32 +30,32 @@
 						<div class="border-[2px] border-black rounded-lg mt-5 px-4">
 							<div class="flex flex-row items-center gap-4 m-2">
 								<label for="title" class="font-bold">Title</label>
-								<input type="text" name="title" id="title" class="border-2 border-gray-300 p-2 rounded-lg w-full" placeholder="Meeting Title" required/>
+								<input type="text" name="title" id="title" class="border-2 border-gray-300 p-2 rounded-lg w-full" placeholder="Meeting Title" value="{{booking.title}}" required/>
 							</div>
 
 							<div class="flex flex-row items-center gap-4 m-2">
 								<label for="details" class="font-bold">Details</label>
-								<input type="text" name="details" id="details" class="border-2 border-gray-300 p-2 rounded-lg w-full" placeholder="Meeting details" required/>
+								<input type="text" name="details" id="details" class="border-2 border-gray-300 p-2 rounded-lg w-full" placeholder="Meeting details" value="{{booking.details}}" required/>
 							</div>
 						</div>
 
 						<div class="flex flex-row gap-4 items-center ">
 							<label for="organiser" class="font-bold">Organiser</label>
-							<input type="text" name="organiser" id="organiser" class="border-2 border-gray-300 p-2 rounded-lg w-full" placeholder="Full Name" required/>
+							<input type="text" name="organiser" id="organiser" class="border-2 border-gray-300 p-2 rounded-lg w-full" placeholder="Full Name" value="{{booking.organiser}}" required/>
 						</div>
 
 
 						<div class="flex flex-row gap-4 items-center">
 							<label for="date" class="font-bold">Date</label>
-							<input type="date" name="date" id="date" class="border-2 border-gray-300 p-2 rounded-lg w-full" required/>
+							<input type="date" name="date" id="date" class="border-2 border-gray-300 p-2 rounded-lg w-full" value="{{booking.date}}" required/>
 						</div>
 						<div class="flex flex-row items-center gap-4">
 							<label for="start" class="font-bold">Start</label>
-							<input type="time" name="start" id="start" class="border-2 border-gray-300 p-2 rounded-lg w-full" required/>
+							<input type="time" name="start" id="start" class="border-2 border-gray-300 p-2 rounded-lg w-full" value="{{booking.start_time}}" required/>
 						</div>
 						<div class="flex flex-row items-center gap-4 ">
 							<label for="end" class="font-bold">End</label>
-							<input type="time" name="end" id="end" class="border-2 border-gray-300 p-2 rounded-lg w-full" required/>
+							<input type="time" name="end" id="end" class="border-2 border-gray-300 p-2 rounded-lg w-full" value="{{booking.end_time}}" required/>
 						</div>
 					</div>
 
@@ -63,9 +63,12 @@
 
 					<div class="border-[2px] border-black rounded-lg my-5 px-4">
 					<h3 class="text-2xl font-bold mt-5">Room</h3>
+					<p>
+						{{booking.room_id}}
+					</p>
 					<select name="room" id="room" class="border-2 border-gray-300 p-2 rounded-lg w-full my-5" required>
 						{% for room in rooms %}
-							<option value="{{ room.id }}">{{ room.name }}</option>
+							<option value="{{ room.id }}" {% if room.id == room_id %} selected {% endif %}>{{ room.name }}</option>
 						{% endfor %}
 					</div>
 					</select>
@@ -81,6 +84,7 @@
 			</div>
 		</div>
 	</div>
+	{% if not booking %}
 	<script>
 		document.getElementById('date').valueAsDate = new Date();
 		var d = new Date();
@@ -91,5 +95,6 @@
 		d.setHours(d.getHours() + 2);
 		document.getElementById('end').value = d.toTimeString().substring(0, 5);
 	</script>
+	{% endif %}
 </body>
 </html>
