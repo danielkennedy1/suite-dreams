@@ -57,17 +57,19 @@
 									<td class="px-6 py-4">{{ booking.end_time }}</td>
 									<td class="px-6 py-4">{{ booking.organiser }}</td>
 									<td class="px-6 py-4">{{ booking.details }}</td>
-									<td class="px-6 py-4">
+									<td class="px-6 py-4 flex flex-row">
+										<a class="p-2 cursor-pointer" href="/edit/{{ booking.id }}"
+											><img
+												src="https://img.icons8.com/dotty/80/null/edit.png"
+												class="h-10"
+										/></a>
 										<a
-											class="bg-blue-500 text-white font-bold p-2 rounded-lg cursor-pointer"
-											href="/edit/{{ booking.id }}"
-											>Edit</a
-										>
-										<a
-											class="bg-red-500 text-white font-bold p-2 rounded-lg cursor-pointer"
+											class="p-2 cursor-pointer"
 											href="/delete/{{ booking.id }}"
-											>Delete</a
-										>
+											><img
+												src="https://img.icons8.com/ios-glyphs/30/null/delete.png"
+												class="h-10"
+										/></a>
 									</td>
 								</tr>
 
