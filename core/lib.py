@@ -52,26 +52,26 @@ def create_booking(booking):
 
     # Check that booking start time is after opening time (9:00)
     if timezone.datetime.strptime(booking["start_time"], "%H:%M").time() < timezone.datetime.strptime("09:00", "%H:%M").time():
-        errors.append(ValidationError("Booking start time is outside of opening hours",
+        errors.append(ValidationError("Booking starts too early. Opening hours: 9:00 - 17:00",
                       code='start_too_early', params={'start_time': booking['start_time']}))
 
     # Check that booking end time is before closing time (17:00)
     if timezone.datetime.strptime(booking["end_time"], "%H:%M").time() > timezone.datetime.strptime("17:00", "%H:%M").time():
-        errors.append(ValidationError("Booking end time is outside of opening hours",
+        errors.append(ValidationError("Booking ends too late. Opening hours: 9:00 - 17:00",
                       code='end_too_late', params={'end_time': booking['end_time']}))
 
     # Check that booking start time is before booking end time
     if timezone.datetime.strptime(booking["start_time"], "%H:%M").time() >= timezone.datetime.strptime(booking["end_time"], "%H:%M").time():
-        errors.append(ValidationError("Booking start time is after booking end time", code='start_after_end', params={
+        errors.append(ValidationError("Booking start time cannot be after booking end time", code='start_after_end', params={
                       'start_time': booking['start_time'], 'end_time': booking['end_time']}))
 
     # Check that booking does not overlap with another booking
     if booking_overlaps(booking):
-        errors.append(ValidationError("Booking overlaps with another booking", code='overlap', params={
+        errors.append(ValidationError(f"{Room.objects.get(id=booking['room_id']).name} is already booked during this time", code='overlap', params={
                       'date': booking['date'], 'start_time': booking['start_time'], 'end_time': booking['end_time']}))
 
     if booking_in_past(booking):
-        errors.append(ValidationError("Booking is in the past", code='booking_in_past', params={
+        errors.append(ValidationError("Bookings must be in the future", code='booking_in_past', params={
                       'date': booking['date'], 'start_time': booking['start_time'], 'end_time': booking['end_time']}))
 
     if errors:
@@ -89,8 +89,9 @@ def create_booking(booking):
 
 
 def delete_booking(id):
-    booking = Booking.objects.get(id=id)
-    if not booking:
+    try:
+        booking = Booking.objects.get(id=id)
+    except Booking.DoesNotExist:
         raise ValidationError("Booking does not exist",
                               code='booking_does_not_exist')
     booking.delete()
