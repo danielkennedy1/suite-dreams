@@ -67,9 +67,25 @@
 						<input type="submit" value="Book" class="bg-blue-500 text-white font-bold p-2 rounded-lg w-full cursor-pointer" id="submit"/>
 						<a href="/" class="bg-red-500 text-white font-bold p-2 rounded-lg w-full text-center mt-3">Cancel</a>
 					</div>
+
+					{% if error %}
+						<p class="text-red-500 text-center mt-5">{{ error }}</p>
+					{% endif %}
 				</form>
 			</div>
 		</div>
 	</div>
+	<script>
+		document.getElementById('date').valueAsDate = new Date();
+		var d = new Date();
+		d.setHours(d.getHours() + 1);
+		document.getElementById('start').value = d.toTimeString().substring(0, 5);
+
+		var d = new Date();
+		d.setHours(d.getHours() + 2);
+		document.getElementById('end').value = d.toTimeString().substring(0, 5);
+
+
+	</script>
 </body>
 </html>
