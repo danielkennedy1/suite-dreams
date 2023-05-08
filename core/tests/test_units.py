@@ -3,8 +3,11 @@ from core.lib import create_booking, booking_overlaps, delete_booking
 from core.models import Room, Booking
 from django.core.exceptions import ValidationError
 from parameterized import parameterized
-import datetime
+from core.tests.cases import Cases
 
+# Global set up as paramaterized tests are expanded before setUp is called
+cases = Cases()
+validation_test_cases = cases.validation_test_cases
 
 class CreateBookingTestCase(TestCase):
 
@@ -29,7 +32,6 @@ class CreateBookingTestCase(TestCase):
             end_time="11:00",
             date="2024-01-01"
         )
-
     def __init__(self, methodName: str = "runTest") -> None:
         super().__init__(methodName)
 
@@ -49,26 +51,7 @@ class CreateBookingTestCase(TestCase):
     
 
     # Booking parameter validation tests
-    @parameterized.expand([
-        (["date"], ["2024-01-32"], "invalid_date"),
-        (["organiser"], [""], "empty_organiser"),
-        (["title"], [""], "empty_title"),
-        (["details"], [""], "empty_details"),
-        (["start_time"], ["7:00"], "start_too_early"),
-        (["end_time"], ["17:01"], "end_too_late"),
-        (["start_time", "end_time"], ["11:00", "10:00"], "start_after_end"),
-        (["organiser"], ["a" * 101], "organiser_too_long"),
-        (["title"], ["a" * 101], "title_too_long"),
-        (["date"], [(datetime.datetime.now() - datetime.timedelta(days=1)).date().strftime("%Y-%m-%d")], "booking_in_past"),
-        (["date"], [(datetime.datetime.now() - datetime.timedelta(days=2)).date().strftime("%Y-%m-%d")], "booking_in_past"),
-        (["date"], [(datetime.datetime.now() - datetime.timedelta(days=300)).date().strftime("%Y-%m-%d")], "booking_in_past"),
-        (["start_time", "end_time", ], ["09:00", "10:01"], "booking_overlaps"),
-        (["start_time", "end_time", ], ["09:00", "11:00"], "booking_overlaps"),
-        (["start_time", "end_time", ], ["09:00", "11:01"], "booking_overlaps"),
-        (["start_time", "end_time", ], ["10:00", "11:00"], "booking_overlaps"),
-        (["start_time", "end_time", ], ["10:00", "11:01"], "booking_overlaps"),
-        (["start_time", "end_time", ], ["10:30", "12:00"], "booking_overlaps")
-    ])
+    @parameterized.expand(validation_test_cases)
     def test_booking_validation(self, fields, values, expected_code):
         booking = self.correct_booking.copy()
         for field, value in zip(fields, values):
