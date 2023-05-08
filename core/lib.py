@@ -67,7 +67,7 @@ def create_booking(booking):
 
     # Check that booking does not overlap with another booking
     if booking_overlaps(booking):
-        errors.append(ValidationError(f"{Room.objects.get(id=booking['room_id']).name} is already booked during this time", code='overlap', params={
+        errors.append(ValidationError(f"{Room.objects.get(id=booking['room_id']).name} is already booked during this time", code='booking_overlaps', params={
                       'date': booking['date'], 'start_time': booking['start_time'], 'end_time': booking['end_time']}))
 
     if booking_in_past(booking):
