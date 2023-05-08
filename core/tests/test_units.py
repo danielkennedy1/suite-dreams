@@ -2,27 +2,11 @@ from django.test import TestCase
 from core.lib import create_booking, booking_overlaps, delete_booking
 from core.models import Room, Booking
 from django.core.exceptions import ValidationError
-from unittest.case import _AssertRaisesContext
-import sys
 from parameterized import parameterized
 import datetime
 
 
 class CreateBookingTestCase(TestCase):
-
-    # TODO - Delete these methods when done
-
-    def display_code(self, err: _AssertRaisesContext):
-        error = "\n\nEXCEPTION CODE: " + \
-            str(err.exception.code) + "  <------" + "\n\n"
-        sys.stderr.write(str(error))
-
-    def display_error(self, err: _AssertRaisesContext):
-        error = "\n\nEXCEPTION>" + str(err.exception) + "<------" + "\n\n"
-        sys.stderr.write(str(error))
-
-    def display(self, val):
-        sys.stderr.write(val)
 
     def setUp(self):
         self.correct_booking = {
@@ -34,8 +18,6 @@ class CreateBookingTestCase(TestCase):
             "title": "Test",
             "details": "Test"
         }
-        self.correct_booking_2 = self.correct_booking.copy()
-        self.correct_booking_2["date"] = "2024-01-02"
         Room.objects.create(id=1, name="Test Room", capacity=1)
         Booking.objects.create(
             id=1,
@@ -45,14 +27,17 @@ class CreateBookingTestCase(TestCase):
             details="Test",
             start_time="10:00",
             end_time="11:00",
-            date="2024-01-02"
+            date="2024-01-01"
         )
 
     def __init__(self, methodName: str = "runTest") -> None:
         super().__init__(methodName)
 
-    def test_1create_booking(self):
-        create_booking(self.correct_booking)
+    # Create a booking with correct parameters, on the next day
+    def test_booking_correct(self):
+        booking = self.correct_booking.copy()
+        booking["date"] = "2024-01-02"
+        create_booking(booking)
         self.assertTrue(True)
 
     # Book a room that doesn't exist
@@ -76,7 +61,13 @@ class CreateBookingTestCase(TestCase):
         (["title"], ["a" * 101], "title_too_long"),
         (["date"], [(datetime.datetime.now() - datetime.timedelta(days=1)).date().strftime("%Y-%m-%d")], "booking_in_past"),
         (["date"], [(datetime.datetime.now() - datetime.timedelta(days=2)).date().strftime("%Y-%m-%d")], "booking_in_past"),
-        (["date"], [(datetime.datetime.now() - datetime.timedelta(days=300)).date().strftime("%Y-%m-%d")], "booking_in_past")
+        (["date"], [(datetime.datetime.now() - datetime.timedelta(days=300)).date().strftime("%Y-%m-%d")], "booking_in_past"),
+        (["start_time", "end_time", ], ["09:00", "10:01"], "booking_overlaps"),
+        (["start_time", "end_time", ], ["09:00", "11:00"], "booking_overlaps"),
+        (["start_time", "end_time", ], ["09:00", "11:01"], "booking_overlaps"),
+        (["start_time", "end_time", ], ["10:00", "11:00"], "booking_overlaps"),
+        (["start_time", "end_time", ], ["10:00", "11:01"], "booking_overlaps"),
+        (["start_time", "end_time", ], ["10:30", "12:00"], "booking_overlaps")
     ])
     def test_booking_validation(self, fields, values, expected_code):
         booking = self.correct_booking.copy()
@@ -96,7 +87,7 @@ class CreateBookingTestCase(TestCase):
             e.exception.args[0], "time data '25:00' does not match format '%H:%M'")
 
     # booking overlaps with another booking
-    # note: correct_booking_2 is 10:00 - 11:00 on 2024-01-02
+    # note: correct_booking is 10:00 - 11:00 on 2024-01-01 in Test Room
     @parameterized.expand([
         ("09:00", "10:00", False),
         ("09:00", "10:01", True),
@@ -108,13 +99,11 @@ class CreateBookingTestCase(TestCase):
         ("11:00", "12:00", False),
         ("11:01", "12:00", False)
     ])
-    def test_2booking_overlap(self, start_time, end_time, expected):
-        booking = self.correct_booking_2.copy()
+    def test_booking_overlap(self, start_time, end_time, expected):
+        booking = self.correct_booking.copy()
         booking["start_time"] = start_time
         booking["end_time"] = end_time
         self.assertEqual(expected, booking_overlaps(booking))
-
-    # TODO: Mock the datetime module so we can test this properly
 
 
 class TestDeleteBooking(TestCase):
