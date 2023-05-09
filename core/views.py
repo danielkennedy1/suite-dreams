@@ -8,9 +8,9 @@ def book(request):
         booking = {
             "organiser": request.POST.get('organiser'),
             "date": request.POST.get('date'),
-            "start_time": request.POST.get('start'),
-            "end_time": request.POST.get('end'),
-            "room_id": request.POST.get('room'),
+            "start_time": request.POST.get('start_time'),
+            "end_time": request.POST.get('end_time'),
+            "room_id": request.POST.get('room_id'),
             "title": request.POST.get('title'),
             "details": request.POST.get('details')
         }
