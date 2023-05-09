@@ -36,7 +36,7 @@ jobs:
             # Generate coverage report
             - name: Generate Coverage Report
               run: |
-                coverage run --source='.' manage.py test
+                coverage run --source='.' --omit='suitedreams/wsgi.py','suitedreams/asgi.py','manage.py' manage.py test
                 coverage report
                 coverage html 
 
