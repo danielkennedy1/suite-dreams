@@ -2,6 +2,8 @@
 
 A software testing project using the medium of an on-site Room Booking System that facilitates business-hours booking of multiple rooms and management of those bookings.
 
+We used TailwindCSS to style the frontend and took a full-stack approach with Django and its inbuilt sqllite functionality.
+
 <br/>
 
 ![Coverage](coverage.svg)
