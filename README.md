@@ -2,7 +2,10 @@
 
 A software testing project using the medium of an on-site Room Booking System that facilitates business-hours booking of multiple rooms and management of those bookings.
 
-[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/) [![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/) [![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)![Coverage](coverage.svg)
+![Coverage](coverage.svg)
+[![Coverage](https://github.com/danielkennedy1/suite-dreams/actions/workflows/coverage.yml/badge.svg?branch=main)](https://github.com/danielkennedy1/suite-dreams/actions/workflows/coverage.yml)
+[![DevSkim](https://github.com/danielkennedy1/suite-dreams/actions/workflows/devskim.yml/badge.svg)](https://github.com/danielkennedy1/suite-dreams/actions/workflows/devskim.yml)
+[![Django CI](https://github.com/danielkennedy1/suite-dreams/actions/workflows/django.yml/badge.svg)](https://github.com/danielkennedy1/suite-dreams/actions/workflows/django.yml)
 
 
 ## Authors
