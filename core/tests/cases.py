@@ -1,9 +1,13 @@
 import datetime
-from freezegun import freeze_time
+
+# mock datetime please using unittest.mock
+from unittest.mock import MagicMock
+
+
+datetime.now = MagicMock(return_value=datetime.datetime(420, 1, 1, 12, 0, 0))
 
 
 class Cases(object):
-    @freeze_time("0420-01-01" + " 09:00:00")
     def __init__(self):
         self.validation_test_cases = [
             # (fields, values, error_code, error_message
