@@ -34,7 +34,7 @@ jobs:
               uses: actions/upload-artifact@v2
               with:
                 name: coverage-report
-                path: htmlcov/index.html
+                path: coverage-report/index.html
 
             - name: Generate coverage badge
               run: |
@@ -44,14 +44,8 @@ jobs:
               uses: actions/upload-artifact@v2 
               with: 
                 name: coverage-badge
-                path: coverage.svg
+                path: coverage-badge/coverage.svg
 
-            - name: Commit and push changes
-              run: |
-                git config --global user.name 'github-actions[bot]'
-                git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
-                git add .
-                git commit -m "Update coverage badge"
-                git push
+            
 
             
