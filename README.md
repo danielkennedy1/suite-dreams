@@ -52,11 +52,29 @@ How to get up and running locally
 
 To run tests, run the following command
 
-**Unit tests**
-- Creation: overlap, business hours, valid inputs
-- Deletion: exists
-
-
 ```bash
   python manage.py test
 ```
+
+## Tests
+
+Our test suite uses Django's own test library, with fixtures including a Test DB, Client, setUp() in TestCases, and the runner itself
+
+**Test Suite**
+core.tests.cases.Cases contains the parameters for the parameterized test cases for both the unit and integration tests.
+
+**Positive testing**
+- Url resolution
+- Normal HTTP GET request responses
+- Normal HTTP POST responses & DB effects
+- create_booking with correct input
+
+**Unit tests**
+- Booking Creation: business hours, input validation, made for future (mocked datetime.now())
+- Booking Deletion: exists
+- Model functionality & factories, associations in DB
+
+**Integration tests**
+- Booking Creation: overlap, End-to-end exception handling, incorrect room, 
+- Coherence between error_code in backend and error_message in frontend using global test suite
+- Nonexistent booking deletion failure

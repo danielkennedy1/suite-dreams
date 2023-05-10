@@ -25,10 +25,3 @@ class Booking(models.Model):
     def __str__(self):
         return f"{self.room} - {self.date} - {self.start_time} - {self.end_time}"
     
-    class Meta:
-        constraints = [
-            #models.UniqueConstraint(fields=['room', 'date', 'start_time'], name='unique_booking'),
-            #models.CheckConstraint(check=models.Q(start_time__lt=models.F('end_time')), name='start_time_before_end_time'),
-            #models.CheckConstraint(check=models.Q(start_time__gte=timezone.time.strptime("09:00")), name='start_time_after_opening_time'),
-        ]
-    
