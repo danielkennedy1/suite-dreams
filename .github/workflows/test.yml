@@ -8,6 +8,7 @@ on:
 
 jobs:
   build:
+	name: Build
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -43,11 +44,11 @@ jobs:
           sarif_file: devskim-results.sarif
 
   coverage:
+	name: Coverage
     runs-on: ubuntu-latest
     steps:
-		# Generate coverage report
 		- name: Generate Coverage Report
-			run: |
+		  run: |
 			coverage run --source='.' --omit='suitedreams/wsgi.py','suitedreams/asgi.py','manage.py' manage.py test
 			coverage report
 			coverage html 
