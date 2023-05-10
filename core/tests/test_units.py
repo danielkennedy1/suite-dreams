@@ -9,6 +9,7 @@ from core.tests.cases import Cases
 cases = Cases()
 validation_test_cases = cases.validation_test_cases
 
+
 class CreateBookingTestCase(TestCase):
 
     def setUp(self):
@@ -32,6 +33,7 @@ class CreateBookingTestCase(TestCase):
             end_time="11:00",
             date="2024-01-01"
         )
+
     def __init__(self, methodName: str = "runTest") -> None:
         super().__init__(methodName)
 
@@ -48,19 +50,20 @@ class CreateBookingTestCase(TestCase):
         booking["room_id"] = 100
         with self.assertRaises(Room.DoesNotExist):
             create_booking(booking)
-    
 
     # Booking parameter validation tests
+
     @parameterized.expand(validation_test_cases)
-    def test_booking_validation(self, fields, values, expected_code):
+    def test_booking_validation(self, fields, values, expected_code, error_message):
         booking = self.correct_booking.copy()
         for field, value in zip(fields, values):
-            booking[field] = value 
+            booking[field] = value
         with self.assertRaises(ValidationError) as e:
             create_booking(booking)
         self.assertEqual(e.exception.error_list[0].code, expected_code)
 
     # invalid time
+
     def test_create_booking_invalid_time(self):
         booking = self.correct_booking.copy()
         booking["start_time"] = "25:00"
@@ -71,7 +74,7 @@ class CreateBookingTestCase(TestCase):
 
     # booking overlaps with another booking
     # note: correct_booking is 10:00 - 11:00 on 2024-01-01 in Test Room
-    @parameterized.expand([
+    @ parameterized.expand([
         ("09:00", "10:00", False),
         ("09:00", "10:01", True),
         ("09:00", "11:00", True),

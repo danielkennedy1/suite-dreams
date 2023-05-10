@@ -1,5 +1,5 @@
+from django.http import HttpResponse
 from django.test import TestCase
-import sys
 from parameterized import parameterized
 from core.models import Room, Booking
 from core.tests.cases import Cases
@@ -103,7 +103,7 @@ class InvalidPostRequestTestCase(TestCase):
 
     # Create a booking with invalid parameters
     @parameterized.expand(validation_test_cases)
-    def test_create_invalid_booking(self, fields, values, error_code):
+    def test_create_invalid_booking(self, fields, values, error_code, error_message):
         booking_request = self.correct_booking.copy()
 
         for field, value in zip(fields, values):
@@ -111,6 +111,6 @@ class InvalidPostRequestTestCase(TestCase):
 
         response = self.client.post('/book/', booking_request)
 
-        # Should redirect to book with a 302
         self.assertTemplateUsed(response, 'book.html')
         self.assertEqual(response.status_code, 200)
+        self.assertContains(response, error_message)
