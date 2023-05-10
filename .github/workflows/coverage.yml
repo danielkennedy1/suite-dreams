@@ -34,7 +34,7 @@ jobs:
               uses: actions/upload-artifact@v2
               with:
                 name: coverage-report
-                path: coverage-report/index.html
+                path: htmlcov/index.html
 
             - name: Generate coverage badge
               run: |
@@ -44,7 +44,7 @@ jobs:
               uses: actions/upload-artifact@v2 
               with: 
                 name: coverage-badge
-                path: coverage-badge/coverage.svg
+                path: coverage.svg
 
             
 

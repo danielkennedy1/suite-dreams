@@ -16,7 +16,6 @@ A software testing project using the medium of an on-site Room Booking System th
 - [Daniel Kennedy](https://www.github.com/danielkennedy1)
 - [Adam Byrne](https://www.github.com/theadambyrne)
 
----
 <br/>
 
 ## Features
