@@ -1,7 +1,10 @@
 import datetime
 
+from freezegun import freeze_time
+
 
 class Cases(object):
+    @freeze_time("420-01-01")
     def __init__(self):
         self.validation_test_cases = [
             # (fields, values, error_code, error_message
