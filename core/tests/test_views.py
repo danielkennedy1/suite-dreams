@@ -1,4 +1,3 @@
-from django.http import HttpResponse
 from django.test import TestCase
 from parameterized import parameterized
 from core.models import Room, Booking

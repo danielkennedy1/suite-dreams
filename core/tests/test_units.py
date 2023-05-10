@@ -4,7 +4,6 @@ from core.models import Room, Booking
 from django.core.exceptions import ValidationError
 from parameterized import parameterized
 from core.tests.cases import Cases
-from freezegun import freeze_time
 
 
 # Global set up as paramaterized tests are expanded before setUp is called
