@@ -47,7 +47,7 @@ jobs:
                 path: htmlcov/index.html
 
             - name: Generate coverage badge
-              run: coverage-badge -o -f coverage.svg 
+              run: coverage-badge -f -o coverage.svg 
             
             - name: Upload coverage badge
               uses: actions/upload-artifact@v2
