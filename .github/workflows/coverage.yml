@@ -35,7 +35,6 @@ jobs:
               with:
                 name: coverage-report
                 path: htmlcov/index.html
-                rename: coverage.html
 
             - name: Generate coverage badge
               run: |
@@ -52,7 +51,7 @@ jobs:
                     git config --global user.name "Adam Byrne"
                     git config --global user.email "adam.r.byrne@gmail.com"
                     git config advice.addIgnoredFile false
-                    git add -f coverage.svg coverage.html
+                    git add -f coverage.svg htmlcov/index.html
                     git commit -m "Added coverage data"
                     git push origin main
 
