@@ -46,6 +46,9 @@ jobs:
                 name: coverage-report
                 path: htmlcov/index.html
 
+            - name: Delete old coverage badge
+              run: rm coverage.svg
+
             - name: Generate coverage badge
               run: coverage-badge -f -o coverage.svg 
             
