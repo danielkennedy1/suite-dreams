@@ -46,8 +46,13 @@ jobs:
                 name: coverage-report
                 path: htmlcov/index.html
 
-            - name: Delete old coverage badge
-              run: rm coverage.svg
+            - name: Delete old coverage badge if exists using actions/upload-artifact@v2
+              uses: actions/upload-artifact@v2
+              with:
+                name: coverage-badge
+                path: coverage.svg
+                retention-days: 1
+                if-no-files-found: continue
 
             - name: Generate coverage badge
               run: coverage-badge -f -o coverage.svg 
