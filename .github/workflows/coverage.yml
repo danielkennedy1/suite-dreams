@@ -28,16 +28,16 @@ jobs:
               run: |
                 coverage run --source='.' --omit='suitedreams/wsgi.py','suitedreams/asgi.py','manage.py' manage.py test
                 coverage report
-                coverage html -d htmlcov
+                coverage html 
 
-            - name: Upload coverage report to repo
+            - name: Upload coverage report to repository
               uses: actions/upload-artifact@v2
               with:
                 name: coverage-report
                 path: htmlcov/index.html
 
             - name: Generate coverage badge
-              run: coverage-badge -f -o coverage.svg 
+              run: coverage-badge -o coverage.svg 
 
             - name: Upload coverage badge
               uses: actions/upload-artifact@v2 
