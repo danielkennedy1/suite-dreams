@@ -4,14 +4,15 @@ attrs==23.1.0
 certifi==2022.12.7
 charset-normalizer==3.1.0
 coverage==7.2.3
-datetime==5.1
 coverage-badge==1.1.0
+DateTime==5.1
 Django==4.2
 django-factory-boy==1.0.0
 django-nose==1.4.7
 exceptiongroup==1.1.1
 factory-boy==3.2.1
 Faker==18.4.0
+freezegun==1.2.2
 greenlet==2.0.1
 h11==0.14.0
 idna==3.4
@@ -29,6 +30,7 @@ pytest-base-url==2.0.0
 pytest-playwright==0.3.3
 python-dateutil==2.8.2
 python-slugify==8.0.1
+pytz==2023.3
 requests==2.29.0
 selenium==4.9.0
 six==1.16.0
@@ -42,3 +44,4 @@ typing_extensions==4.5.0
 urllib3==1.26.15
 websockets==11.0.2
 wsproto==1.2.0
+zope.interface==6.0
