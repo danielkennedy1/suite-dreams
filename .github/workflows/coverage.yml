@@ -28,7 +28,7 @@ jobs:
               run: |
                 coverage run --source='.' --omit='suitedreams/wsgi.py','suitedreams/asgi.py','manage.py' manage.py test
                 coverage report
-                coverage html 
+                coverage html -d htmlcov
 
             - name: Upload coverage report to repo
               uses: actions/upload-artifact@v2
