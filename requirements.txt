@@ -6,7 +6,7 @@ charset-normalizer==3.1.0
 coverage==7.2.3
 coverage-badge==1.1.0
 DateTime==5.1
-Django==4.2.1
+Django==4.2.3
 django-factory-boy==1.0.0
 django-nose==1.4.7
 exceptiongroup==1.1.1
